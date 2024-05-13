@@ -1,0 +1,37 @@
+buffers: {
+    size_kb: 1000000
+    fill_policy: DISCARD
+}
+data_sources: {
+    config {
+        name: "android.power"
+        android_power_config {
+            battery_poll_ms: 250
+            collect_power_rails: true
+        }
+    }
+}
+data_sources: {
+    config {
+        name: "linux.sys_stats"
+        sys_stats_config {
+            stat_period_ms: 1000
+            stat_counters: STAT_CPU_TIMES
+            # stat_counters: STAT_FORK_COUNT
+            cpufreq_period_ms: 1000
+        }
+    }
+}
+data_sources: {
+    config {
+        name: "linux.ftrace"
+        ftrace_config {
+            ftrace_events: "power/cpu_frequency"
+            ftrace_events: "power/cpu_idle"
+            ftrace_events: "sched/sched_switch"
+            ftrace_events: "power/gpu_frequency"
+            ftrace_events: "power/gpu_work_period"
+        }
+    }
+}
+duration_ms: 300000
